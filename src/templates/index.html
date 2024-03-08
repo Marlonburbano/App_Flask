@@ -1,0 +1,202 @@
+
+{% extends './base2.html' %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<header>
+    <h1>Eventos Udenar</h1>
+</header>
+
+<div class="container" id="tres">
+    
+    <h1>Agregar un Juego</h1>
+    <!-- Botón para abrir el modal -->
+    <div  id="botones">
+        <button  class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarJuegoModal">
+            Agregar Juego
+        </button>
+        <!-- Agregar botón "Inscribirme" -->
+        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inscribirmeModal">
+            Inscribirme
+        </a>
+        <a class="btn btn-secondary"  href="/inscritos">
+            Lista de inscritos
+        </a>
+    </div>
+    <br> <br>
+    <!-- Modal -->
+    <div class="modal fade" id="agregarJuegoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/agregar_juego" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Juego</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del Juego:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="hora" class="form-label">Hora del Juego:</label>
+                            <input type="time" class="form-control" id="hora" name="hora" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha del Juego:</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lugar" class="form-label">Lugar del Juego:</label>
+                            <input type="text" class="form-control" id="lugar" name="lugar" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción del Juego:</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Agregar Juego</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="tarjetas-juegos" class="row">
+        {% for juego in juegos %}
+            <div class="col mt-3">
+                <div class="card" style="width: 18rem;">
+                    <img src="https://s3.amazonaws.com/rtvc-assets-senalcolombia.gov.co/s3fs-public/styles/imagen_noticia/public/field/image/diferencias-microfutbol-y-futbolsala-articulo.jpg?itok=W5M4po8n" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ juego.nombre }} de {{juego.registro.nombre}}</h5>
+                        <h6>Hora:</h6>
+                        <p class="card-text">{{ juego.hora }}</p>
+                        <h6>Fecha:</h6>
+                        <p class="card-text">{{ juego.fecha }}</p>
+                        <h6>Lugar:</h6>
+                        <p class="card-text">{{ juego.lugar }}</p>
+                        <p class="card-text">{{ juego.descripcion }}</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarJuegoModal{{ juego.id }}">
+                            Editar
+                        </button>                    
+                        <a class="btn btn-danger" href="{{ url_for('eliminar_juego', id=juego.id ) }}">
+                            Eliminar
+                        </a>
+                    </div>
+                </div>
+                <br>
+            </div>
+        {% endfor %}
+    </div>
+    {% for juego in juegos %}
+            <!-- Modal de edición para cada juego -->
+            <div class="modal fade" id="editarJuegoModal{{ juego.id  }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="{{ url_for('editar_juego', id=juego.id )  }}" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Editar Juego</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre del Juego:</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ juego.nombre }}" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="hora" class="form-label">Hora del Juego:</label>
+                                    <input type="time" class="form-control" id="hora" name="hora" value="{{ juego.hora }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha" class="form-label">Fecha del Juego:</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha" value="{{ juego.fecha }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lugar" class="form-label">Lugar del Juego:</label>
+                                    <input type="text" class="form-control" id="lugar" name="lugar" value="{{ juego.lugar }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descripcion" class="form-label">Descripción del Juego:</label>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" required>{{ juego.descripcion }}</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+     {% endfor %}
+
+        
+   <!-- Modal de inscripción -->
+    <div class="modal fade" id="inscribirmeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ url_for('inscribirme') }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Inscripción</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido:</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="codigo" class="form-label">Código:</label>
+                            <input type="text" class="form-control" id="codigo" name="codigo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="semestre" class="form-label">Semestre:</label>
+                            <input type="number" class="form-control" id="semestre" name="semestre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carrera" class="form-label">Carrera:</label>
+                            <input type="text" class="form-control" id="carrera" name="carrera" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="juego_id" class="form-label">Seleccionar un Juego:</label>
+                            <select class="form-select" id="juego_id" name="juego_id">
+                                {% for juego in juegos %}
+                                    <option value="{{ juego.id }}">{{ juego.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Inscribirme</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,37 @@
+{% extends './base2.html' %}
+
+{% block title %}Noticias{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<header>
+    <h1>Últimas Noticias</h1>
+</header>
+
+<div class="container">
+    <div class="article">
+        <h2>Gran campeonato de microfutbol</h2>
+        <p>Fecha de publicación: 10 de noviembre de 2023</p>
+        <img src="https://th.bing.com/th/id/R.8ee2035b54ce980a066b426189b050e1?rik=V1OAl0pDRoxmrQ&riu=http%3a%2f%2f1.bp.blogspot.com%2f-U2WEIOQ4Ieo%2fUaUQ51QLi7I%2fAAAAAAAADfg%2fgUD44UindOw%2fs1600%2fPARTIDO%2b3.JPG&ehk=mZDx73AD99vuHU1awmA2A6WRUwsrD%2fCYZ8gSqq7u%2b%2bA%3d&risl=&pid=ImgRaw&r=0" alt="Imagen de la noticia 1" width="400px" height="200px">
+        <p>Inscribite en el apartado de eventos, ahi esta toda la informacion que tienes saber </p>
+        <a href="/eventos" class="btn">Ver más</a>
+    </div>
+
+    <div class="article">
+        <h2>Quieres jugar ajedres</h2>
+        <p>Fecha de publicación: 9 de noviembre de 2023</p>
+        <img src="https://th.bing.com/th/id/R.d2368fe285c55b4b1c7e887f0ba6fb06?rik=uoZkeFdpcLmQYg&riu=http%3a%2f%2fwww.madrimasd.org%2fblogs%2fmatematicas%2ffiles%2f2016%2f04%2f160415_ajedrez.jpg&ehk=EGQfZyIKhShaHJjraQQ9ohI%2fQmNjbgIg%2bJDbeQ4N2%2f0%3d&risl=&pid=ImgRaw&r=0" alt="Imagen de la noticia 2" width="400px" height="200px">
+        <p>Incribite en el apartado de eventos, te estaremos contando todo</p>
+        <a href="/eventos" class="btn">Leer más</a>
+    </div>
+</div>
+
+<footer>
+    &copy; 2023 - Sitio de Noticias
+</footer>
+{% endblock %}

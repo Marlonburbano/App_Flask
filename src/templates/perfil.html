@@ -1,0 +1,46 @@
+{% extends './base2.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<header>
+    <h1>Perfil de Usuario</h1>
+</header>
+
+<section>
+    
+    <img src="{{ user_foto_perfil }}" alt="Profile Picture" class="profile-img">
+    <div class="user-details">
+        <h1>{{ username }}</h1>
+        <p>{{ user_description }}</p>
+    </div>
+
+    <div class="social-links">
+        <div class="container" style="display: flex; justify-content: space-between;">
+            <div>
+                {% for link in enlaces %}
+                    <a href="{{ link['url'] }}" target="_blank"><i class="{{ link['icon_class'] }}"></i></a>
+                {% endfor %}
+            </div>
+            <div id="for">
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('cargar_foto') }}">
+                    <input type="file" name="foto_perfil" accept="image/*" id="arch">
+                    <button type="submit" class="btn">Subir Foto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+       
+</section>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends './base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<img class="mb-4" src="{{ url_for('static', filename='img/logoude.png') }}" alt="" width="350" height="200">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+    <div class="wrapper">
+        <div class="title">Registro</div>
+            <br>
+            <form name="formRegisterClient" id="formRegisterClient" action="{{ url_for('registerUser') }}" method="POST" class="mt-5" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Primer Nombre</label>
+                        <input type="text" name="nombre" class="form-control" autofocus required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellido" class="form-label">Primer Apellido</label>
+                        <input type="text" name="apellido" class="form-control" required>
+                    </div>
+                </div>
+            
+                <div class="mb-6">
+                    <label for="email" class="form-label mt-3">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="mb-6">
+                    <label for="telefono" class="form-label mt-3">Telefono</label>
+                    <input type="number" name="telefono" class="form-control" required>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="password" class="form-label mt-3">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="repite_password" class="form-label mt-3">Repetir Password</label>
+                        <input type="password" name="repite_password" class="form-control" required>
+                    </div>
+                </div>
+            
+                
+                <div class="d-grid gap-2 mt-3 mb-3">
+                    <input type="submit" class="btn btn-primary btn-send" id="sendForm" value="Crear Ahora!">
+                </div>
+            
+                <div class="mb-12">
+                    <span>
+                        Ya tengo cuenta, 
+                    </span>
+                    
+                    <a href="/login" style="color: #555;" class="volverViewLogin">
+                        <i class="bi bi-arrow-left-short"></i>
+                        Volver
+                    </a>
+            
+                </div>
+            </form>
+
+    </div>
+        
+   
+{% endblock %}
